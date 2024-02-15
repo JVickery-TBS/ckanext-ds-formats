@@ -1,4 +1,6 @@
+from io import StringIO
 
+BOM = "\N{bom}"
 
 class FormatBase(object):
 
@@ -7,6 +9,7 @@ class FormatBase(object):
     content_type = None
     charset = 'utf-8'
     ds_record_format = 'objects'
+    bom = None
 
     def get_content_type(self):
         # type: () -> bytes
@@ -31,7 +34,10 @@ class SHP(FormatBase):
 
     def writer_factory(self, fields, bom=False):
         # type: (dict[str, any], bool) -> bytes
-        return
+        output = StringIO()
+
+        if bom:
+            output.write(BOM)
 
 
 class GeoJSON(FormatBase):
@@ -42,7 +48,10 @@ class GeoJSON(FormatBase):
 
     def writer_factory(self, fields, bom=False):
         # type: (dict[str, any], bool) -> bytes
-        return
+        output = StringIO()
+
+        if bom:
+            output.write(BOM)
 
 
 class GPKG(FormatBase):
@@ -53,4 +62,7 @@ class GPKG(FormatBase):
 
     def writer_factory(self, fields, bom=False):
         # type: (dict[str, any], bool) -> bytes
-        return
+        output = StringIO()
+
+        if bom:
+            output.write(BOM)
